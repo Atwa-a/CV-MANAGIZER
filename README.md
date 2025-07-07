@@ -43,27 +43,6 @@ CV MANAGIZER/
 - PDFMiner / PyMuPDF (PDF parsing and text extraction)  
 - Jinja2 (HTML templating)
 
-## How to Run
-
-1. Clone the repository  
-   git clone https://github.com/Atwa-a/CV-MANAGIZER.git
-
-2. Navigate into the project  
-   cd CV-MANAGIZER
-
-3. Create and activate a virtual environment  
-   python -m venv venv  
-   venv\Scripts\activate      (For Windows)  
-   source venv/bin/activate   (For macOS/Linux)
-
-4. Install dependencies  
-   pip install -r requirements.txt
-
-5. Run the Flask application  
-   python app.py
-
-6. Open your browser and go to  
-   http://127.0.0.1:5000
 
 ## Sample Code
 
