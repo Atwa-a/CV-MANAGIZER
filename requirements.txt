@@ -1,0 +1,15 @@
+Flask>=2.2
+asgiref>=3.2
+bcrypt
+spacy
+thinc
+weasyprint
+markupsafe
+cachetools
+python-dotenv
+PyMuPDF
+scikit-learn
+numpy
+pandas
+python-Levenshtein>=0.25  # Required by fuzzywuzzy for performance
+torch>=2.2

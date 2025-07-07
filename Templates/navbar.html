@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg fixed-top shadow-sm px-4"
+     style="top: 0; transition: top 0.3s ease; z-index: 999; backdrop-filter: blur(16px); background: rgba(15, 15, 25, 0.85); border-bottom: 1px solid rgba(255,255,255,0.05);">
+  <div class="container-fluid">
+
+    <!-- Brand Centered -->
+    <a class="navbar-brand fw-bold text-info fs-3 mx-auto order-lg-2" href="{{ url_for('home') }}" style="letter-spacing: 1px;">
+      CV Managizer
+    </a>
+
+    <!-- Toggle (for mobile) -->
+    <button class="navbar-toggler order-lg-1" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Auth Status (Right side, always visible) -->
+    <div class="d-none d-lg-flex align-items-center text-light order-lg-3" style="width: 180px; justify-content: flex-end;">
+      {% if session.get('user') %}
+        <small class="me-2">Welcome, <strong>{{ session.get('user') }}</strong></small>
+        <a href="{{ url_for('logout') }}" class="btn btn-sm btn-logout-neon ms-2">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-info me-2">Login</a>
+        <a href="{{ url_for('signup') }}" class="btn btn-sm btn-info text-dark">Sign Up</a>
+      {% endif %}
+    </div>
+
+    <!-- Collapsing nav links (centered) -->
+    <div class="collapse navbar-collapse justify-content-center order-3 order-lg-2" id="navMenu">
+      <ul class="navbar-nav d-flex justify-content-center gap-4">
+        {% set current = request.endpoint %}
+        {% for label, route in [('Home', 'home'), ('Go Pro', 'pro'), ('Settings', 'settings'), ('About', 'about')] %} 
+        <li class="nav-item position-relative">
+          <a class="nav-link text-white" href="{{ url_for(route) }}">
+            {{ label }}
+            <span class="nav-underline"></span>
+          </a>
+          
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+</nav>

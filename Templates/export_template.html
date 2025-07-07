@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CV Analysis Report</title>
+  <style>
+      body {
+    font-family: Arial, sans-serif;
+    margin: 1rem;
+    color: #222;
+    font-size: 10pt;
+    line-height: 1.1;
+  }
+  .section {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: #f0f8ff;
+    border-radius: 6px;
+    page-break-inside: avoid;
+  }
+  ul {
+    list-style-type: disc;
+    margin-left: 1rem;
+    padding-left: 0;
+    max-height: 6.5cm;
+    overflow: hidden;
+  }
+  ul li {
+    margin-bottom: 0.15rem;
+  }
+  @media print {
+    body, html {
+      height: 29.7cm; /* A4 height */
+      overflow: hidden;
+    }
+    .section {
+      page-break-after: avoid !important;
+    }
+  }
+
+
+  </style>
+</head>
+<body>
+  <h1>CV Analysis Report</h1>
+  <p><strong>User:</strong> {{ username }}</p>
+  <p><strong>Date:</strong> {{ now }}</p>
+
+  <div class="section">
+    <h2>Final Score</h2>
+    <p class="score">{{ finalscore }}</p>
+  </div>
+
+  <div class="section">
+    <h2>Match Level</h2>
+    <p class="match-level">{{ match_level }}</p>
+  </div>
+
+  <div class="section">
+    <h2>Strengths</h2>
+    {% if strengths %}
+    <ul>
+      {% for item in strengths %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No strengths identified.</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h2>Weaknesses</h2>
+    {% if weaknesses %}
+    <ul>
+      {% for item in weaknesses %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No weaknesses identified.</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h2>Suggestions</h2>
+    {% if suggestions %}
+    <ul>
+      {% for item in suggestions %}
+      <li>{{ item }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>No suggestions available.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

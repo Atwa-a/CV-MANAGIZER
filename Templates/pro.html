@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if session.get("pro_user") %}
+<div class="d-flex align-items-center mb-3" style="gap: 0.5rem;">
+  <div class="pro-lightning-dot"></div>
+  <span class="text-success fw-semibold">Pro Activated</span>
+</div>
+{% endif %}
+
+<div class="text-center mb-5">
+  <h1 class="neon-text-glow mb-3">Upgrade to Pro</h1>
+  <p class="lead text-muted">Unlock complete control over CV evaluation standards and scoring models.</p>
+</div>
+
+<div class="glass-card p-4 mb-4">
+  <h3 class="text-info mb-3">Why Go Pro?</h3>
+  <p>
+    CV Managizer Pro gives you direct control over how resumes are evaluated. Set your own AI filters and scoring rules.
+    Define role-specific expectations, required skills, and formatting guidelines.
+  </p>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}
+    {% if message == "show_promo_input" %}
+      <div class="alert alert-warning neon-border text-center">
+        Enter a promo code below to activate Pro and unlock advanced features!
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endwith %}
+
+<form method="POST" action="{{ url_for('submit_pro_settings') }}">
+  <div class="glass-card p-4">
+    <h4 class="neon-text-glow mb-3">AI Evaluation Criteria Form</h4>
+
+    <div class="mb-3">
+      <label class="form-label">Target Job Title</label>
+      <input type="text" name="job_title" class="form-control bg-dark text-light border-info" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Must-Have Keywords</label>
+      <input type="text" name="keywords" class="form-control bg-dark text-light border-info">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Required Sections</label>
+      <textarea name="sections" rows="3" class="form-control bg-dark text-light border-info"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Soft Skills / Traits</label>
+      <input type="text" name="traits" class="form-control bg-dark text-light border-info">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Custom Notes</label>
+      <textarea name="notes" rows="3" class="form-control bg-dark text-light border-info"></textarea>
+    </div>
+
+    <div class="form-check mb-4">
+      <input class="form-check-input" type="checkbox" name="use_custom_keywords" value="1" id="customKeywords">
+      <label class="form-check-label" for="customKeywords">
+        Use Custom Keywords Instead of Job Description
+      </label>
+    </div>
+
+    <div class="d-grid">
+      <button type="submit" class="btn btn-neon btn-lg">Save Evaluation Rules</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

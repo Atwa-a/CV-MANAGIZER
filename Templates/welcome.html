@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% set hide_nav = true %}
+{% block content %}
+
+
+
+
+<section class="vh-100 d-flex justify-content-center align-items-start pt-5">
+  <div class="text-center w-100 px-3" style="max-width: 720px; margin-top: 60px;">
+    <h1 class="display-3 fw-bold neon-text-glow mb-4" style="animation: fadeInDown 1.2s ease-in-out; line-height: 1.2;">
+      Welcome to <br><span class="text-info">CV Managizer</span>
+    </h1>
+    <p class="lead mb-5" style="animation: fadeInUp 1.6s ease-in-out;">
+      Your AI-powered resume checker — streamline your hiring in seconds.
+    </p>
+    <div class="d-flex justify-content-center flex-wrap gap-3" style="animation: fadeInUp 2s ease-in-out;">
+      <a href="{{ url_for('login') }}" class="btn btn-neon px-4 py-2">Login</a>
+      <a href="{{ url_for('signup') }}" class="btn btn-neon px-4 py-2">Sign Up</a>
+      <a href="{{ url_for('guest') }}" class="btn btn-outline-light px-4 py-2">Try as Guest</a>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+</style>
+{% endblock %}

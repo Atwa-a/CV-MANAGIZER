@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title }} | CV Managizer</title>
+
+  <!-- Fonts & Frameworks -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Theme Styling -->
+  <style>
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main.container {
+  flex: 1;
+}
+
+    body {
+      background: radial-gradient(ellipse at top, #10131a, #0a0b0f);
+      font-family: 'Open Sans', sans-serif;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Orbitron', sans-serif;
+    }
+    .navbar-brand {
+      font-family: 'Orbitron', sans-serif !important;
+      color: #fff !important;
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff;
+      animation: glow-white 2s ease-in-out infinite;
+      pointer-events: none;
+      cursor: default;
+    }
+    .navbar-nav .nav-link {
+      font-size: 1.2rem;
+      padding: 0.75rem 1rem;
+    }
+    @keyframes glow-white {
+      0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff; }
+      50% { text-shadow: 0 0 20px #fff, 0 0 30px #fff; }
+      100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff; }
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .neon-text-glow {
+      color: #ffffff;
+      text-shadow: 0 0 5px #00f2ff, 0 0 15px #00f2ff, 0 0 30px #00f2ff;
+    }
+    main.container {
+      padding-top: 100px;
+    }
+    .navbar {
+      transition: top 0.3s;
+      z-index: 999;
+    }
+
+    #background-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background: radial-gradient(circle at center, #0ff, #057091, rgb(36, 4, 153), #ff00cc);
+      background-size: 400% 400%;
+      filter: blur(100px);
+      opacity: 0.15;
+    }
+      .footer {
+  background: #0a0b0f;
+  width: 100%;
+}
+    .btn-logout-neon {
+      color: #ff4f4f;
+      border: 1px solid #ff4f4f;
+      text-shadow: 0 0 5px #ff4f4f, 0 0 10px #ff4f4f;
+      box-shadow: 0 0 5px #ff4f4f;
+      transition: all 0.3s ease;
+    }
+
+  </style>
+</head>
+<body>
+
+{% if request.endpoint in ['welcome', 'login', 'signup'] %}
+  <div id="background-animation"></div>
+{% endif %}
+
+
+  <!-- Nav -->
+  {% if not hide_nav %}
+    {% include 'navbar.html' %}
+  {% endif %}
+
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if message == 'promo_block' %}
+        <div class="flash-overlay-backdrop" id="promoFlashBackdrop">
+          <div class="floating-alert-wrapper text-center">
+            <div class="alert promo-alert position-relative">
+              <button class="custom-close" onclick="document.getElementById('promoFlashBackdrop')?.remove()" aria-label="Close">✖</button>
+
+              <p class="mb-3">Enter your promo code below: </p>
+              <form action="{{ url_for('redeem_promo') }}" method="POST" class="d-flex flex-column align-items-center gap-3">
+                <input type="text" name="promo_code" placeholder="Enter Promo Code"
+                       class="form-control bg-dark text-light border-info text-center" style="max-width: 250px;" required>
+                <button type="submit" class="btn btn-neon w-100" style="max-width: 250px;">Activate</button>
+              </form>
+        
+              <a href="{{ url_for('home') }}" class="text-info mt-4 d-block">Back to Home</a>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="flash-overlay-backdrop" id="genericFlashBackdrop">
+          <div class="floating-alert-wrapper">
+            <div class="alert alert-{{ category }} neon-border position-relative">
+              <button type="button" class="btn-close position-absolute top-0 end-0 m-1"
+                      onclick="document.getElementById('genericFlashBackdrop').remove();"
+                      aria-label="Close"></button>
+              {{ message }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+   
+
+  <!-- Main Content Block -->
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  {% if request.endpoint != 'welcome' %}
+  <footer class="text-center py-3 border-top border-secondary text-muted" style="font-size: 0.9rem;">
+    &copy; {{ current_year }} CV Managizer. All rights reserved. Created by <strong>A_Atwa</strong>.
+  </footer>
+  
+{% endif %}
+
+  <!-- Analyzing Overlay -->
+  <div id="analyzing-overlay" style="display: none;">
+    <div class="loader"></div>
+    <div>Analyzing your CV...</div>
+  </div>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom JS (only if present) -->
+  <script>
+    fetch("{{ url_for('static', filename='js/animations.js') }}")
+      .then(res => {
+        if (res.ok) {
+          const s = document.createElement("script");
+          s.src = "{{ url_for('static', filename='js/animations.js') }}";
+          document.body.appendChild(s);
+        }
+      });
+  </script>
+
+  <!-- Scroll-Only Navbar Visibility Script -->
+  <script>
+    let prevScroll = window.scrollY;
+    const navbar = document.querySelector(".navbar");
+
+    window.addEventListener("scroll", () => {
+      let currentScroll = window.scrollY;
+      if (currentScroll < prevScroll) {
+        navbar.style.top = "0";
+      } else {
+        navbar.style.top = "-80px";
+      }
+      prevScroll = currentScroll;
+    });
+  </script>
+
+  <!-- Mouse Movement Dynamic Background (only for welcome page) -->
+  {% if request.endpoint == 'welcome' %}
+  <script>
+  const bg = document.getElementById('background-animation');
+  document.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 200;
+    const y = (e.clientY / window.innerHeight - 0.5) * 200;
+    bg.style.backgroundPosition = `${50 + x}% ${50 + y}%`;
+  });
+</script>
+
+  {% endif %}
+{% set current_year = current_year or 2025 %}
+</body>
+</html>
