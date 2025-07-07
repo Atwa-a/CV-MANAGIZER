@@ -61,16 +61,6 @@ def score_resume(text, required_keywords):
 
 This function scores a resume based on the number of matched keywords and returns a percentage.
 
-## Future Improvements
-
-- Admin dashboard for review history  
-- Integration with LinkedIn or job boards  
-- Export scoring summary as PDF/CSV  
-- Advanced NLP for semantic keyword matching
-
-## License
-
-This project is open source under the MIT License. You are free to use, modify, and distribute it.
 
 ## Maintainer
 
